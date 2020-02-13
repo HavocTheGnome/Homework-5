@@ -11,6 +11,6 @@ public:
     Node(int payload);
     int getPayload();
     Node* getNextNode();
-    Void setNextNode(Node* n);
+    void setNextNode(Node* n);
 };
 #endif /* Node_hpp */

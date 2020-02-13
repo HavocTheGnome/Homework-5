@@ -5,7 +5,7 @@ LinkedList::LinkedList()
 {
     this->count = 0;
 }
-LinkedList::addFront(int payload)
+void LinkedList::addFront(int payload)
 {
     Node* n = new Node(payload);
 
@@ -45,63 +45,80 @@ int LinkedList::getFront()
 }
 void LinkedList::addEnd(int payload)
 {
-    Node* replacementNode;
+    Node* replacementNode = new Node(0);
     Node* nodeToReturn = this->head;
-    for(int i = 0; i <= count; i++)
+    if(!this->head)
     {
-        nodeToReturn = this->head;
-        nodeToReturn->setnextNode(replacementNode);
-        replacementNode = nodeToReturn;
-        this->head = this->head->getNextNode();
+        this->addFront(payload);
     }
-    Node* n = new Node(payload);
-    n->setNextNode(this->replacementNode);
-    replacementNode = n;
-    this->count++;
-    for(int i = 0; i <= count; i++)
+    else
     {
-        nodeToReturn = replacementNode;
-        nodeToReturn->setnextNode(head);
-        this->head = nodeToReturn;
-        replacementNode = ReplacementNode->getNextNode();
-    }
+        for(int i = 0; i <= count; i++)
+        {
+            nodeToReturn = this->head;
+            nodeToReturn->setNextNode(replacementNode);
+            replacementNode = nodeToReturn;
+            this->head = this->head->getNextNode();
+        }
+        Node* n = new Node(payload);
+        n->setNextNode(replacementNode);
+        replacementNode = n;
+        this->count++;
+        for(int i = 0; i <= count; i++)
+        {
+            nodeToReturn = replacementNode;
+            nodeToReturn->setNextNode(head);
+            this->head = nodeToReturn;
+            replacementNode = replacementNode->getNextNode();
+        }
     delete nodeToReturn;
-    delete replacementNode;
+    delete replacementNode; 
+    }
+    
 }
 int LinkedList::removeEnd()
 {
     Node* replacementNode;
     Node* nodeToReturn = this->head;
-    for(int i = 0; i < count; i++)
+    if(!this->head)
     {
-        nodeToReturn = this->head;
-        nodeToReturn->setnextNode(replacementNode);
-        replacementNode = this->nodeToReturn;
-        head = this->head->getNextNode();
+        this->head = this->head;
     }
-    int val = replacementNode->getPayload();
-    replacementNode = replacementNode->getNextNode();
-    this->count--;
-    for(int i = 0; i <= count; i++)
+    else
     {
-        nodeToReturn = this->replacementNode;
-        nodeToReturn->setnextNode(head);
-        this->head = nodeToReturn;
-        replacementNode = this->ReplacementNode->getNextNode();
+        for(int i = 0; i < count; i++)
+        {
+            nodeToReturn = this->head;
+            nodeToReturn->setNextNode(replacementNode);
+            replacementNode = nodeToReturn;
+            head = this->head->getNextNode();
+        }
+        int val = replacementNode->getPayload();
+        replacementNode = replacementNode->getNextNode();
+        this->count--;
+        for(int i = 0; i <= count; i++)
+        {
+            nodeToReturn = replacementNode;
+            nodeToReturn->setNextNode(head);
+            this->head = nodeToReturn;
+            replacementNode = replacementNode->getNextNode();
+        }
+        return val;
     }
+    
     delete nodeToReturn;
     delete replacementNode;
-    return val;
+    
 }
 int LinkedList::getEnd()
 {
-    Node* replacementNode;
+    Node* replacementNode = new Node(0);
     Node* nodeToReturn = this->head;
     for(int i = 0; i < count; i++)
     {
         nodeToReturn = this->head;
-        nodeToReturn->setnextNode(replacementNode);
-        replacementNode = this->nodeToReturn;
+        nodeToReturn->setNextNode(replacementNode);
+        replacementNode = nodeToReturn;
         head = this->head->getNextNode();
     }
     return replacementNode->getPayload();
